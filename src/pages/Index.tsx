@@ -4,10 +4,13 @@ import PostCard from '@/components/PostCard';
 import TrendingSidebar from '@/components/TrendingSidebar';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card } from '@/components/ui/card';
+import Icon from '@/components/ui/icon';
 
 export default function Index() {
   const [activeTab, setActiveTab] = useState('home');
   const [sortBy, setSortBy] = useState('hot');
+  const [selectedPost, setSelectedPost] = useState<number | null>(null);
 
   const mockPosts = [
     {
@@ -107,9 +110,49 @@ export default function Index() {
             </div>
 
             <div className="space-y-4">
-              {mockPosts.map(post => (
-                <PostCard key={post.id} {...post} />
-              ))}
+              {mockPosts
+                .filter(post => {
+                  if (activeTab === 'home') return true;
+                  if (activeTab === 'saved') return false;
+                  if (activeTab === 'trending') return post.upvotes > 10000;
+                  return true;
+                })
+                .map(post => (
+                  <PostCard 
+                    key={post.id} 
+                    {...post} 
+                    onClick={() => setSelectedPost(post.id)}
+                  />
+                ))}
+              
+              {activeTab === 'saved' && (
+                <div className="text-center py-12 text-muted-foreground">
+                  <Icon name="Bookmark" size={48} className="mx-auto mb-4 opacity-50" />
+                  <p>У вас пока нет сохраненных постов</p>
+                </div>
+              )}
+              
+              {activeTab === 'communities' && (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-bold">Популярные сообщества</h2>
+                  {['Наука', 'История', 'Игры', 'Технологии', 'Космос'].map((comm, idx) => (
+                    <Card key={comm} className="p-4 hover:shadow-md transition-shadow cursor-pointer">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-2xl">
+                            {['🔬', '📚', '🎮', '💻', '🚀'][idx]}
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">r/{comm}</h3>
+                            <p className="text-sm text-muted-foreground">{(idx + 1) * 12500} подписчиков</p>
+                          </div>
+                        </div>
+                        <Button size="sm">Подписаться</Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex justify-center pt-4">

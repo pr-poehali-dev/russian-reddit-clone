@@ -16,6 +16,7 @@ interface PostCardProps {
   commentCount: number;
   timeAgo: string;
   isFlagged?: boolean;
+  onClick?: () => void;
 }
 
 export default function PostCard({
@@ -29,6 +30,7 @@ export default function PostCard({
   commentCount,
   timeAgo,
   isFlagged = false,
+  onClick,
 }: PostCardProps) {
   const [votes, setVotes] = useState({ up: upvotes, down: downvotes });
   const [userVote, setUserVote] = useState<'up' | 'down' | null>(null);
@@ -112,7 +114,10 @@ export default function PostCard({
             )}
           </div>
 
-          <h2 className="text-lg font-semibold mb-2 hover:text-primary cursor-pointer transition-colors">
+          <h2 
+            className="text-lg font-semibold mb-2 hover:text-primary cursor-pointer transition-colors"
+            onClick={onClick}
+          >
             {title}
           </h2>
 
