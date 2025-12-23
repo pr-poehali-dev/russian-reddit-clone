@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 interface NavbarProps {
   activeTab: string;
@@ -9,13 +8,6 @@ interface NavbarProps {
 }
 
 export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
-  const tabs = [
-    { id: 'home', label: 'Главная', icon: 'Home' },
-    { id: 'communities', label: 'Сообщества', icon: 'Users' },
-    { id: 'trending', label: 'Тренды', icon: 'TrendingUp' },
-    { id: 'saved', label: 'Сохраненные', icon: 'Bookmark' },
-  ];
-
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4">
@@ -29,18 +21,42 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
             </div>
 
             <div className="hidden md:flex items-center gap-1">
-              {tabs.map(tab => (
-                <Button
-                  key={tab.id}
-                  variant={activeTab === tab.id ? 'secondary' : 'ghost'}
-                  size="sm"
-                  onClick={() => onTabChange(tab.id)}
-                  className="gap-2"
-                >
-                  <Icon name={tab.icon as any} size={16} />
-                  {tab.label}
-                </Button>
-              ))}
+              <Button
+                variant={activeTab === 'home' ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => onTabChange('home')}
+                className="gap-2"
+              >
+                <Icon name="Home" size={16} />
+                Главная
+              </Button>
+              <Button
+                variant={activeTab === 'communities' ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => onTabChange('communities')}
+                className="gap-2"
+              >
+                <Icon name="Users" size={16} />
+                Сообщества
+              </Button>
+              <Button
+                variant={activeTab === 'trending' ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => onTabChange('trending')}
+                className="gap-2"
+              >
+                <Icon name="TrendingUp" size={16} />
+                Тренды
+              </Button>
+              <Button
+                variant={activeTab === 'saved' ? 'secondary' : 'ghost'}
+                size="sm"
+                onClick={() => onTabChange('saved')}
+                className="gap-2"
+              >
+                <Icon name="Bookmark" size={16} />
+                Сохраненные
+              </Button>
             </div>
           </div>
 
@@ -65,25 +81,49 @@ export default function Navbar({ activeTab, onTabChange }: NavbarProps) {
               <Icon name="Plus" size={16} className="mr-2" />
               Создать пост
             </Button>
-            <Avatar className="w-8 h-8 cursor-pointer">
-              <AvatarFallback className="bg-primary text-white text-sm">А</AvatarFallback>
-            </Avatar>
+            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer">
+              <span className="text-white text-sm font-semibold">А</span>
+            </div>
           </div>
         </div>
 
         <div className="flex md:hidden items-center gap-1 pb-2 overflow-x-auto">
-          {tabs.map(tab => (
-            <Button
-              key={tab.id}
-              variant={activeTab === tab.id ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => onTabChange(tab.id)}
-              className="gap-2 whitespace-nowrap"
-            >
-              <Icon name={tab.icon as any} size={16} />
-              {tab.label}
-            </Button>
-          ))}
+          <Button
+            variant={activeTab === 'home' ? 'secondary' : 'ghost'}
+            size="sm"
+            onClick={() => onTabChange('home')}
+            className="gap-2 whitespace-nowrap"
+          >
+            <Icon name="Home" size={16} />
+            Главная
+          </Button>
+          <Button
+            variant={activeTab === 'communities' ? 'secondary' : 'ghost'}
+            size="sm"
+            onClick={() => onTabChange('communities')}
+            className="gap-2 whitespace-nowrap"
+          >
+            <Icon name="Users" size={16} />
+            Сообщества
+          </Button>
+          <Button
+            variant={activeTab === 'trending' ? 'secondary' : 'ghost'}
+            size="sm"
+            onClick={() => onTabChange('trending')}
+            className="gap-2 whitespace-nowrap"
+          >
+            <Icon name="TrendingUp" size={16} />
+            Тренды
+          </Button>
+          <Button
+            variant={activeTab === 'saved' ? 'secondary' : 'ghost'}
+            size="sm"
+            onClick={() => onTabChange('saved')}
+            className="gap-2 whitespace-nowrap"
+          >
+            <Icon name="Bookmark" size={16} />
+            Сохраненные
+          </Button>
         </div>
       </div>
     </nav>
