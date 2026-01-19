@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import PostCard from '@/components/PostCard';
 import TrendingSidebar from '@/components/TrendingSidebar';
@@ -8,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 
 export default function Index() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('home');
   const [sortBy, setSortBy] = useState('hot');
   const [selectedPost, setSelectedPost] = useState<number | null>(null);
@@ -121,7 +123,7 @@ export default function Index() {
                   <PostCard 
                     key={post.id} 
                     {...post} 
-                    onClick={() => setSelectedPost(post.id)}
+                    onClick={() => navigate(`/post/${post.id}`)}
                   />
                 ))}
               
